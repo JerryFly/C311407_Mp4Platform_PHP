@@ -1,4 +1,4 @@
-<?php header("Access-Control-Allow-Origin: http://192.168.0.5"); ?>
+<?php header("Access-Control-Allow-Origin: http://localhost:3652"); ?>
 <?php
 
 ini_set('display_errors', 1);
@@ -32,6 +32,7 @@ if ($_FILES["file"]["error"] > 0) {
 
 $jsonString =  json_encode((array)$ajMessage);
 print_r($jsonString);
+print_r($_POST["videoFileName"]);
 
 
 class ajaxMessage
