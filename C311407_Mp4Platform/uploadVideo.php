@@ -4,26 +4,16 @@
  * POST參數
  * MUID
  * VideoID
- * videoAbsolutePath
- * photoAbsolutePath
  * videoFileName
- * photoFileName
  * */
 
-
+include_once 'classPostParamter.php';
+include_once 'class_AjaxMessage.php';
+include_once 'class_fileInfo.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-
-$postInfo = new postParamater ();
-
-$postInfo->MUID = $_POST["MUID"];
-$postInfo->VideoID = $_POST["VideoID"];
-$postInfo->videoFileName = $_POST["videoFileName"];
-$postInfo->photoFileName = $_POST["photoFileName"];
-
-
-
+define('rootPATH', __DIR__);
 
 $ajMessage = new ajaxMessage();
 
@@ -42,44 +32,33 @@ if ($_FILES["file"]["error"] > 0) {
 	$splitFileName = explode(".", $getFileName);
 	$getExtension = end($splitFileName);
 
-	$ajMessage->result = true;
+	//回傳JSON取得檔案資訊
 	$ajMessage->fileInfo = new fileInfo();
 
 	$ajMessage->fileInfo->fileName = $getFileName;
 	$ajMessage->fileInfo->fileType = $getFileType;
 	$ajMessage->fileInfo->fileSize = $getFileSize;
 	$ajMessage->fileInfo->fileExtension = $getExtension;
+
+	//取得Post參數
+	$postInfo = new postParamater ();
+	
+	$postInfo->MUID = $_POST["MUID"];
+	$postInfo->VideoID = $_POST["VideoID"];
+	$postInfo->videoFileName = $_POST["videoFileName"];
+	
+	$defFolder = "VOD";
+	$videoAbsolutePath = rootPATH."/".$defFolder."/".$postInfo->VideoID."/".$postInfo->MUID;
+	$ajMessage->message = $videoAbsolutePath;
+	//檢查路徑
+	if(!file_exists($videoAbsolutePath)){
+		mkdir($videoAbsolutePath, 0777, true);
+	}
+	
+	$isOK = move_uploaded_file($getFileTmpPath,$videoAbsolutePath."/".$postInfo->videoFileName);
+	$ajMessage->result = true;
 }
 
 $jsonString =  json_encode((array)$ajMessage);
 print_r($jsonString);
-
-class ajaxMessage
-{
-	public $src = "";
-	public $result = true;
-	public $message = "";
-	public $fileInfo = "";
-};
-
-class fileInfo{
-
-	public $fileName = "";
-	public $fileType = "";
-	public $fileSize = "";
-	public $fileExtension = "";
-};
-
-
-class postParamater {
-	public $MUID;
-	public $VideoID;
-	
-	public $videoAbsolutePath;
-	public $photoAbsolutePath;
-	public $videoFileName;
-	public $photoFileName;
-}
-
-
 ?>
