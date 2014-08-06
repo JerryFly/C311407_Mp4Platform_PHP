@@ -1,8 +1,29 @@
 <?php header("Access-Control-Allow-Origin: http://localhost:3652"); ?>
 <?php
+/*
+ * POST°Ñ¼Æ
+ * MUID
+ * VideoID
+ * videoAbsolutePath
+ * photoAbsolutePath
+ * videoFileName
+ * photoFileName
+ * */
+
+
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
+$postInfo = new postParamater ();
+
+$postInfo->MUID = $_POST["MUID"];
+$postInfo->VideoID = $_POST["VideoID"];
+$postInfo->videoFileName = $_POST["videoFileName"];
+$postInfo->photoFileName = $_POST["photoFileName"];
+
+
+
 
 $ajMessage = new ajaxMessage();
 
@@ -32,8 +53,6 @@ if ($_FILES["file"]["error"] > 0) {
 
 $jsonString =  json_encode((array)$ajMessage);
 print_r($jsonString);
-print_r($_POST["videoFileName"]);
-
 
 class ajaxMessage
 {
@@ -50,6 +69,17 @@ class fileInfo{
 	public $fileSize = "";
 	public $fileExtension = "";
 };
+
+
+class postParamater {
+	public $MUID;
+	public $VideoID;
+	
+	public $videoAbsolutePath;
+	public $photoAbsolutePath;
+	public $videoFileName;
+	public $photoFileName;
+}
 
 
 ?>
