@@ -6,3 +6,4 @@ class fileInfo{
 	public $fileSize = "";
 	public $fileExtension = "";
 };
+?>

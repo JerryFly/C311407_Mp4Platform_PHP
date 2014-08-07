@@ -6,3 +6,4 @@ class ajaxMessage
 	public $message = "";
 	public $fileInfo = "";
 };
+?>

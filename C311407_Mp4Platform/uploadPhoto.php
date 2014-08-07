@@ -46,7 +46,7 @@ if ($_FILES["file"]["error"] > 0) {
 	
 	$postInfo->MUID = $_POST["MUID"];
 	$postInfo->VideoID = $_POST["VideoID"];
-	$postInfo->videoFileName = $_POST["videoFileName"];
+	$postInfo->photoFileName = $_POST["photoFileName"];
 	
 	$defFolder = "VOD";
 	$videoAbsolutePath = rootPATH."/".$defFolder."/".$postInfo->VideoID."/".$postInfo->MUID;
@@ -56,8 +56,8 @@ if ($_FILES["file"]["error"] > 0) {
 		mkdir($videoAbsolutePath, 0777, true);
 	}
 	
-	$isOK = move_uploaded_file($getFileTmpPath,$videoAbsolutePath."/".$postInfo->videoFileName);
-	$ajMessage->src = webUri."/".$defFolder."/".$postInfo->VideoID."/".$postInfo->MUID."/".$postInfo->videoFileName;
+	$isOK = move_uploaded_file($getFileTmpPath,$videoAbsolutePath."/".$postInfo->photoFileName);
+	$ajMessage->src = webUri."/".$defFolder."/".$postInfo->VideoID."/".$postInfo->MUID."/".$postInfo->photoFileName;
 	$ajMessage->result = true;
 }
 

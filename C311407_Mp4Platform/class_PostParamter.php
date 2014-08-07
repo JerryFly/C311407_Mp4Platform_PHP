@@ -7,4 +7,5 @@ class postParamater {
 	public $photoAbsolutePath;
 	public $videoFileName;
 	public $photoFileName;
-}
+};
+?>
