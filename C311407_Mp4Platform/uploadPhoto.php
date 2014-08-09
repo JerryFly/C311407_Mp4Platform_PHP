@@ -47,17 +47,18 @@ if ($_FILES["file"]["error"] > 0) {
 	$postInfo->MUID = $_POST["MUID"];
 	$postInfo->VideoID = $_POST["VideoID"];
 	$postInfo->photoFileName = $_POST["photoFileName"];
+	$postInfo->photoAbsolutePath = $_POST["photoAbsolutePath"];
 	
-	$defFolder = "VOD";
-	$videoAbsolutePath = rootPATH."/".$defFolder."/".$postInfo->VideoID."/".$postInfo->MUID;
-	$ajMessage->message = $videoAbsolutePath;
+	//$defFolder = "VOD";
+	$photoAbsolutePath = rootPATH."/".$postInfo->photoAbsolutePath;
+	$ajMessage->message = $photoAbsolutePath;
 	//ÀË¬d¸ô®|
-	if(!file_exists($videoAbsolutePath)){
-		mkdir($videoAbsolutePath, 0777, true);
+	if(!file_exists($photoAbsolutePath)){
+		mkdir($photoAbsolutePath, 0777, true);
 	}
 	
-	$isOK = move_uploaded_file($getFileTmpPath,$videoAbsolutePath."/".$postInfo->photoFileName);
-	$ajMessage->src = webUri."/".$defFolder."/".$postInfo->VideoID."/".$postInfo->MUID."/".$postInfo->photoFileName;
+	$isOK = move_uploaded_file($getFileTmpPath,$photoAbsolutePath."/".$postInfo->photoFileName);
+	$ajMessage->src = webUri."/".$postInfo->photoAbsolutePath."/".$postInfo->photoFileName;
 	$ajMessage->result = true;
 }
 
