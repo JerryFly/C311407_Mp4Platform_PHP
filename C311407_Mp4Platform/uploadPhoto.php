@@ -9,6 +9,7 @@
 include_once 'class_PostParamter.php';
 include_once 'class_AjaxMessage.php';
 include_once 'class_fileInfo.php';
+include_once 'class_SimpleImage.php';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
