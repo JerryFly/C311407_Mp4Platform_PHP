@@ -14,7 +14,6 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 define('rootPATH', __DIR__);
-define('webUri','http://203.66.57.153');
 
 $ajMessage = new ajaxMessage();
 
@@ -48,6 +47,7 @@ if ($_FILES["file"]["error"] > 0) {
 	$postInfo->VideoID = $_POST["VideoID"];
 	$postInfo->videoFileName = $_POST["videoFileName"];
 	$postInfo->videoAbsolutePath = $_POST["videoAbsolutePath"];
+	$postInfo->vodUrl = $_POST["vodUrl"];
 	
 	//$defFolder = "VOD";
 	$videoAbsolutePath = rootPATH."/".$postInfo->videoAbsolutePath;
@@ -58,7 +58,7 @@ if ($_FILES["file"]["error"] > 0) {
 	}
 	
 	$isOK = move_uploaded_file($getFileTmpPath,$videoAbsolutePath."/".$postInfo->videoFileName);
-	$ajMessage->src = webUri."/".$postInfo->videoAbsolutePath."/".$postInfo->videoFileName;
+	$ajMessage->src = $postInfo->vodUrl."/".$postInfo->videoAbsolutePath."/".$postInfo->videoFileName;
 	$ajMessage->result = true;
 }
 
